@@ -17,7 +17,7 @@ def validate_input(prompt, list): #Gives a y/n prompt to the user and validates 
                 return requested_info
                 break
             else:
-                print("\nSorry, I don't recognize that response. Your response must be in the following list:\n{list}\n")
+                print(f"\nSorry, I don't recognize that response. Your response must be in the following list:\n{list}\n")
         except TypeError:
             raise Exception("One of the arguments is of the wrong type.")
 
@@ -96,10 +96,32 @@ and I will try to guess you number in the least amount of attempts."""
     upper = 1000 #Initial upper boundary for valid guesses.
     while True:
         c += 1
-        possible_num = math.ceil((upper-lower)/2)
+        possible_num = math.ceil((upper+lower)/2)
         query = validate_input(f"Guess {c}: I think it's {possible_num}\nIs that guess correct, high, or low? ", ['correct', 'high', 'low'])
 
-        #try writing the elif function as a dictionary instead.
+        if query == 'correct' and c > 1:
+            print(f"Yes! It only took me {c} guesses!\n")
+            break
+        elif query == 'low':
+            print("No Problem, I just need to make a quick adjustment.\n")
+            time.sleep(1)
+            lower = possible_num
+            print("Alright, I'm ready to make my next guess.\n")
+            time.sleep(1)
+        elif query == 'high':
+            print("No Problem, I just need to make a quick adjustment.\n")
+            time.sleep(1)
+            upper = possible_num
+            print("Alright, I'm ready to make my next guess.\n")
+            time.sleep(1)
+        else:
+            time.sleep(1)
+            print(f"\nYes! It only took me {c} guess!\n")
+            break
+    
+    #Need something to check to make sure that the user didn't make a mistake.
+
+    print("I had a lot of fun, that was a pretty tough one!")
 
 #debugging
 #user_guess()
